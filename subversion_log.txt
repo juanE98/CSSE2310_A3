@@ -1,0 +1,391 @@
+URL to view log online:
+https://source.eait.uq.edu.au/viewvc/csse2310-sem2-s4431796/trunk/a3/?view=log
+
+------------------------------------------------------------------------
+r1 | uqpsutto@uq.edu.au | 2021-08-03 11:11:48 +1000 (Tue, 03 Aug 2021) | 1 line
+Changed paths:
+   A /prac2
+   A /trunk
+   A /trunk/a1
+   A /trunk/a3
+   A /trunk/a4
+
+Initial repository structure
+
+
+------------------------------------------------------------------------
+r45 | s4431796 | 2021-09-21 02:39:31 +1000 (Tue, 21 Sep 2021) | 1 line
+Changed paths:
+   A /trunk/a3/jobrunner.c
+
+initial commit jobrunner file
+
+Index: jobrunner.c
+ jobrunner.c |   31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+------------------------------------------------------------------------
+r46 | s4431796 | 2021-09-22 01:12:29 +1000 (Wed, 22 Sep 2021) | 1 line
+Changed paths:
+   A /trunk/a3/Makefile
+   M /trunk/a3/jobrunner.c
+   A /trunk/a3/jobrunner.h
+
+Initial makefile created; processes invalid command line arguments where no command line arguments are specified and checking of '-v' option. Added .h file for jobrunner 
+
+Index: Makefile
+ Makefile |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+Index: jobrunner.c
+ jobrunner.c |   57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 55 insertions(+), 2 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+------------------------------------------------------------------------
+r47 | s4431796 | 2021-09-22 02:28:11 +1000 (Wed, 22 Sep 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+ added verify_jobfile() to check if jobfile can be opened or if it exists. jobfile command line check occurs in line 54 and line 42.
+
+Index: jobrunner.c
+ jobrunner.c |   22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+------------------------------------------------------------------------
+r48 | s4431796 | 2021-09-22 02:38:26 +1000 (Wed, 22 Sep 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+
+modified parse_cmd_args() to check for usage errors first before opening jobfiles and verifying them.
+
+Index: jobrunner.c
+ jobrunner.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+------------------------------------------------------------------------
+r49 | s4431796 | 2021-09-23 20:42:59 +1000 (Thu, 23 Sep 2021) | 1 line
+Changed paths:
+   M /trunk/a3/Makefile
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+Makefile modified: added link with library containing functions for <csse2310a3.h>; added lineNum to exit_program to be used by INVALID_JOBSPEC_LINE- error for invalid line while parsing jobfile. Added read_jobfile() which reads a jobfile and ignores lines starting with '#' and whitespaces.
+
+Index: Makefile
+ Makefile |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+Index: jobrunner.c
+ jobrunner.c |   37 ++++++++++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 5 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+------------------------------------------------------------------------
+r50 | s4431796 | 2021-09-29 00:00:54 +1000 (Wed, 29 Sep 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+added parse_jobDetails() that parases the jobdetails of a line and checks if the line is invalid. Checks for empty fields, leading or trailing spaces for timeout field, checks if the integer is non-negative integer. Instantiates a job struct that stores information from the fields. 
+
+Index: jobrunner.c
+ jobrunner.c |   59 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 56 insertions(+), 3 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+------------------------------------------------------------------------
+r51 | s4431796 | 2021-10-01 13:59:18 +1000 (Fri, 01 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/Makefile
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+parse_jobDetails() now checks for 0 in timeout field; also parses optional arguments into Job struct.
+
+Index: Makefile
+ Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Index: jobrunner.c
+ jobrunner.c |   37 +++++++++++++++++++++++++------------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+------------------------------------------------------------------------
+r52 | s4431796 | 2021-10-02 00:49:39 +1000 (Sat, 02 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+added exit status 4 to exit_program(); main function now tries to open each jobfile and also tries to read each jobfile; parse_cmd_args return type changed to int; removed verify_jobfile() as this is now done in main function; read_jobfile() now adds each valid Job to an array of Job struct. parse_jobDetails() return type changed to Job
+
+Index: jobrunner.c
+ jobrunner.c |  101 +++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 63 insertions(+), 38 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+------------------------------------------------------------------------
+r53 | s4431796 | 2021-10-02 02:15:22 +1000 (Sat, 02 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+exit status 4 is checked in main(); int jobFileIndex added in parse_cmd_args() line 66. Logic reworked to use index values when iterating for loop in line 71. read_jobfile() returns an int that counts the number of jobs available to be run.
+
+Index: jobrunner.c
+ jobrunner.c |   43 +++++++++++++++++++++++--------------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+------------------------------------------------------------------------
+r54 | s4431796 | 2021-10-02 17:49:54 +1000 (Sat, 02 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/Makefile
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+
+Makefile: linked jobrunner from object files and compiled source files separately; read_jobfile() no longer adds each runnable job into jobsAvailable array, instead this is done in parse_jobdetails(); parse_jobdetails() return type changed to void. Line 190 creates a new struct Job* instead of instantiating a Job struct; check_timeout() added to check timeout field validity.
+
+Index: Makefile
+ Makefile |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+Index: jobrunner.c
+ jobrunner.c |  124 ++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 75 insertions(+), 49 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+------------------------------------------------------------------------
+r55 | s4431796 | 2021-10-03 00:37:31 +1000 (Sun, 03 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/Makefile
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+   A /trunk/a3/run.c
+   A /trunk/a3/run.h
+
+added run.c: handles fthe running of jobs; main() line 37 now passes entire jobsAvailable array instead of looping through it and accessing each job. This is now done in run_job() in run.c. run_job() now creates a child process for each job by accessing each job in the jobsAvailable array passed. Child exits with 255 if exec() fails. stdout message also printed.
+
+Index: Makefile
+ Makefile |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+Index: jobrunner.c
+ jobrunner.c |   52 +++++++++++++++-------------------------------------
+ 1 file changed, 15 insertions(+), 37 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+Index: run.c
+ run.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+Index: run.h
+ run.h |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+------------------------------------------------------------------------
+r56 | s4431796 | 2021-10-03 17:18:01 +1000 (Sun, 03 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+set_execvp_args() in run.c sets the execvp args. used in line 24 to restructure code for run_job() in run.c; able to fork() and exec() basic child process with args. 
+
+Index: run.c
+ run.c |   43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
+Index: run.h
+ run.h |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+------------------------------------------------------------------------
+r57 | s4431796 | 2021-10-04 00:39:38 +1000 (Mon, 04 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+run_jobs() added to iterate through each job; create_child() creates a child process using fork() and exec() for the required job program; check_jobs() monitors the process of jobs each second and prints about their status. set_execvp_args() sets the arguments for both conditions in line 72.
+
+Index: jobrunner.c
+ jobrunner.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+Index: run.c
+ run.c |   84 +++++++++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 55 insertions(+), 29 deletions(-)
+Index: run.h
+ run.h |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+------------------------------------------------------------------------
+r58 | s4431796 | 2021-10-04 17:14:55 +1000 (Mon, 04 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+Added check_filename() which verifies th t the stdin and stdout filenames of a job. If can't be opened, sends an error message and skips running that job; Added if statement to check_jobs() line 89: only prints result of jobs where pid != NULL; check_jobs() moved inside for loop in run_jobs() 
+
+Index: jobrunner.c
+ jobrunner.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+Index: run.c
+ run.c |   49 +++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 41 insertions(+), 8 deletions(-)
+Index: run.h
+ run.h |    2 ++
+ 1 file changed, 2 insertions(+)
+
+------------------------------------------------------------------------
+r59 | s4431796 | 2021-10-05 01:15:17 +1000 (Tue, 05 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+redirect() added: redirects input and output of job processes
+
+Index: run.c
+ run.c |   53 +++++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 43 insertions(+), 10 deletions(-)
+Index: run.h
+ run.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+------------------------------------------------------------------------
+r60 | s4431796 | 2021-10-05 05:05:05 +1000 (Tue, 05 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+added runnable flag to struct; passed tests up to 6.5; added a bool variable runnable in check_filename. Allows multiple unopenable read and write messages to be printed out for jobs with both invalid stdin, stout inputs; verify_runnable_filename() added to pre screen each job 
+
+Index: jobrunner.c
+ jobrunner.c |    1 +
+ 1 file changed, 1 insertion(+)
+Index: jobrunner.h
+ jobrunner.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+Index: run.c
+ run.c |   41 +++++++++++++++++++++++++++++++++--------
+ 1 file changed, 33 insertions(+), 8 deletions(-)
+Index: run.h
+ run.h |    2 ++
+ 1 file changed, 2 insertions(+)
+
+------------------------------------------------------------------------
+r61 | s4431796 | 2021-10-05 18:09:21 +1000 (Tue, 05 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+   M /trunk/a3/run.c
+
+removed jobsRunnable variable in verify_runnable_filename, used existing jobsToRun variable instead to keep track of valid runnable jobs. Added function protoype to free memory (not yet implemented) in jobrunner.c; parent process no longer sleep() in create_child(); check_jobs() sleep() moved to line 129 inside for loop. 
+
+Index: jobrunner.c
+ jobrunner.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
+Index: jobrunner.h
+ jobrunner.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+Index: run.c
+ run.c |   33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
+
+------------------------------------------------------------------------
+r62 | s4431796 | 2021-10-05 23:21:06 +1000 (Tue, 05 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+check_jobs() now correctly assigns number to a specific job; verify_runnable_filename() now also checks for invalid pipe usage: lines 49 - 55; check_pipename() checks for invalid pipe usage by iterating through each job in the jobsAvailable array and comparing it to the stdinput/stdoutput of the given job that begins with '@'. Passed all tests up to 6.5, 7.3 - 7.6
+
+Index: run.c
+ run.c |  144 +++++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 108 insertions(+), 36 deletions(-)
+Index: run.h
+ run.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+------------------------------------------------------------------------
+r63 | s4431796 | 2021-10-07 21:28:55 +1000 (Thu, 07 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+passed pipe usage validity check tests 7.3 - 7.7. Added Pipe struct to create invalid pipes. In run.c: verify_runnable_filename now takes in pipes parameter. Implemented functions to retrieve all invalid pipes first, then checks each job to match the invalid pipe to and prints error messages to the first match. Added jobs_runnable() to count the number of runnable jobs before exit 4; added get_invalid_pipes(), function to retrieve all invalid pipes; added check_pipe() to check a specific pipe for validity.
+
+Index: jobrunner.c
+ jobrunner.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    2 ++
+ 1 file changed, 2 insertions(+)
+Index: run.c
+ run.c |  205 ++++++++++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 132 insertions(+), 73 deletions(-)
+Index: run.h
+ run.h |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
+
+------------------------------------------------------------------------
+r64 | s4431796 | 2021-10-08 03:27:03 +1000 (Fri, 08 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+   M /trunk/a3/run.c
+   M /trunk/a3/run.h
+
+Freed memory for jobsAvailable struct array and pipes struct array; added count_fields() as a helper function to count number of fields split by split_by_commas(). Malloc'd memory for jobs with no args in line 204. 
+
+Index: run.h
+ run.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+Index: jobrunner.c
+ jobrunner.c |   79 ++++++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 59 insertions(+), 20 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+Index: run.c
+ run.c |   16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+------------------------------------------------------------------------
+r65 | s4431796 | 2021-10-08 15:16:28 +1000 (Fri, 08 Oct 2021) | 1 line
+Changed paths:
+   M /trunk/a3/jobrunner.c
+   M /trunk/a3/jobrunner.h
+   M /trunk/a3/run.c
+
+added check_mand_fields() as a helper function in jobrunner.c to split up code in parse_jobdetails(); free'd memory for jobDetails, line 142; free'd 'line' in line 147; free'd jobsAvailable before exit. Added verbose mode for run.c; jobNumber++ is now moved to line 40 from create_child() 
+
+Index: jobrunner.c
+ jobrunner.c |   41 +++++++++++++++++++++++++++++++----------
+ 1 file changed, 31 insertions(+), 10 deletions(-)
+Index: jobrunner.h
+ jobrunner.h |    3 +++
+ 1 file changed, 3 insertions(+)
+Index: run.c
+ run.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+
+------------------------------------------------------------------------
